@@ -1,0 +1,41 @@
+{
+  "name": "storybook-workshop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Storybook workshop template — design system component library with AI-powered development",
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "dotenv -e .env.local -- chromatic --exit-zero-on-changes"
+  },
+  "devDependencies": {
+    "@chromatic-com/storybook": "^5.0.0",
+    "@storybook/addon-a11y": "^10.1.11",
+    "@storybook/addon-docs": "^10.1.11",
+    "@storybook/addon-themes": "^10.1.11",
+    "@storybook/addon-vitest": "^10.1.11",
+    "@storybook/react-vite": "^10.1.11",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^5.1.2",
+    "chromatic": "^13.3.5",
+    "dotenv-cli": "^11.0.0",
+    "storybook": "^10.1.11",
+    "storybook-addon-pseudo-states": "10.1.11",
+    "typescript": "~5.9.3",
+    "vite": "^7.2.4"
+  },
+  "dependencies": {
+    "@radix-ui/react-progress": "^1.1.8",
+    "@radix-ui/react-slot": "^1.2.4",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.562.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "tailwind-merge": "^3.4.0"
+  }
+}

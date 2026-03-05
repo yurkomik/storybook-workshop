@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/* Enable class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Light theme (default) — OKLCH color space for perceptually uniform colors */
+:root {
+  --background: oklch(100% 0 0);
+  --foreground: oklch(14.9% 0.015 285.82);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(14.9% 0.015 285.82);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(14.9% 0.015 285.82);
+  --primary: oklch(21.5% 0.012 285.82);
+  --primary-foreground: oklch(98.5% 0.002 285.82);
+  --secondary: oklch(96.7% 0.003 285.82);
+  --secondary-foreground: oklch(21.5% 0.012 285.82);
+  --muted: oklch(96.7% 0.003 285.82);
+  --muted-foreground: oklch(55.8% 0.013 285.82);
+  --accent: oklch(96.7% 0.003 285.82);
+  --accent-foreground: oklch(21.5% 0.012 285.82);
+  --destructive: oklch(57.7% 0.215 27.33);
+  --destructive-foreground: oklch(98.5% 0.002 285.82);
+  --border: oklch(85% 0.006 285.82);
+  --input: oklch(75% 0.010 285.82);
+  --ring: oklch(71.1% 0.015 285.82);
+  --radius: 0.625rem;
+}
+
+/* Dark theme */
+.dark {
+  --background: oklch(14.9% 0.015 285.82);
+  --foreground: oklch(98.5% 0.002 285.82);
+  --card: oklch(14.9% 0.015 285.82);
+  --card-foreground: oklch(98.5% 0.002 285.82);
+  --popover: oklch(14.9% 0.015 285.82);
+  --popover-foreground: oklch(98.5% 0.002 285.82);
+  --primary: oklch(98.5% 0.002 285.82);
+  --primary-foreground: oklch(21.5% 0.012 285.82);
+  --secondary: oklch(26.9% 0.015 285.82);
+  --secondary-foreground: oklch(98.5% 0.002 285.82);
+  --muted: oklch(26.9% 0.015 285.82);
+  --muted-foreground: oklch(71.1% 0.013 285.82);
+  --accent: oklch(26.9% 0.015 285.82);
+  --accent-foreground: oklch(98.5% 0.002 285.82);
+  --destructive: oklch(57.7% 0.215 27.33);
+  --destructive-foreground: oklch(98.5% 0.002 285.82);
+  --border: oklch(26.9% 0.015 285.82);
+  --input: oklch(26.9% 0.015 285.82);
+  --ring: oklch(83.9% 0.013 285.82);
+}
+
+/* Register with Tailwind v4 */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius: var(--radius);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom scrollbar */
+@layer base {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--muted-foreground);
+    border-radius: 4px;
+    opacity: 0.5;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--foreground);
+    opacity: 0.7;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted-foreground) transparent;
+  }
+}

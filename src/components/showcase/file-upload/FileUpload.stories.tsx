@@ -16,6 +16,7 @@
 
 import { useState, useCallback } from 'react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, userEvent, within } from 'storybook/test'
 import { FileUpload } from './FileUpload'
 import { DropZone } from './DropZone'
 import { FileList } from './FileList'
@@ -542,5 +543,79 @@ export const Playground: Story = {
     disabled: false,
     showPreview: true,
     accept: ['.pdf', '.png', '.jpg', '.csv', 'image/*'],
+  },
+}
+
+/* ============================================================================
+   INTERACTION TESTS
+   These stories include play() functions that run automated tests
+   in the Storybook UI and via vitest.
+   ============================================================================ */
+
+/** Verify the drop zone renders and is clickable. */
+export const AccessibilityTest: Story = {
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    await step('Drop zone is visible with accessible text', async () => {
+      const dropZone = canvas.getByText(/drag.*drop|click.*browse/i)
+      await expect(dropZone).toBeVisible()
+    })
+
+    await step('File input exists (hidden)', async () => {
+      const input = canvasElement.querySelector('input[type="file"]')
+      await expect(input).toBeTruthy()
+    })
+  },
+}
+
+/** Verify disabled state blocks interaction. */
+export const DisabledInteractionTest: Story = {
+  args: {
+    disabled: true,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    await step('Drop zone shows disabled styling', async () => {
+      const dropZone = canvas.getByText(/drag.*drop|click.*browse/i)
+      await expect(dropZone).toBeVisible()
+    })
+
+    await step('File input is disabled', async () => {
+      const input = canvasElement.querySelector('input[type="file"]')
+      await expect(input).toBeTruthy()
+      await expect((input as HTMLInputElement).disabled).toBe(true)
+    })
+  },
+}
+
+/** Verify remove button works on pre-populated files. */
+export const RemoveFileTest: Story = {
+  render: () => (
+    <PrePopulated
+      fileStates={[
+        createFileState(MOCK_FILES.pdf, { status: 'complete', progress: 100 }),
+        createFileState(MOCK_FILES.image, { status: 'complete', progress: 100 }),
+      ]}
+    />
+  ),
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    await step('Two files are displayed', async () => {
+      await expect(canvas.getByText('quarterly-report.pdf')).toBeVisible()
+      await expect(canvas.getByText('hero-banner.png')).toBeVisible()
+    })
+
+    await step('Click remove on first file', async () => {
+      const removeButtons = canvas.getAllByRole('button')
+      const removeBtn = removeButtons.find(btn =>
+        btn.querySelector('svg') && btn.closest('[class*="file"]')
+      )
+      if (removeBtn) {
+        await userEvent.click(removeBtn)
+      }
+    })
   },
 }

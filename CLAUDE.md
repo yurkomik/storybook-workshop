@@ -4,9 +4,9 @@ Storybook workshop template. React 19, Vite, Tailwind CSS v4, Storybook 10, Chro
 
 ## First-Time Setup
 
-If the user is new or just cloned this repo, guide them through:
+If node_modules/ doesn't exist or the user says they just cloned/started:
 
-1. Run `chmod +x setup.sh && ./setup.sh` — installs all dependencies
+1. Run `chmod +x setup.sh && ./setup.sh --no-open` — installs all dependencies
 2. Run `bun run storybook` — opens Storybook at http://localhost:6006
 3. Point them to `docs/storybook-workshop-guide.md` for the full workshop curriculum
 

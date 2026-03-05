@@ -2,31 +2,38 @@
 
 AI-powered component development workshop. Designers describe what they want — Claude Code builds the components and stories.
 
-## Quick Start
+## Setup (for AI agents)
 
-### 1. Install [Antigravity IDE](https://antigravity.google) (free) + Claude Code extension (`Cmd+Shift+X`)
-
-### 2. Open Antigravity terminal (`` Ctrl+` ``) and run:
+A user has opened a folder in their IDE and shared this repo link with you. Set up the project in their current directory:
 
 ```bash
-# Clone the template into your own GitHub repo
-gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
-cd my-design-system
+# 1. Clone into the current folder
+git clone https://github.com/yurkomik/storybook-workshop.git .
 
-# Install everything (Node, bun, Claude Code, project deps)
-chmod +x setup.sh && ./setup.sh
+# 2. Install all dependencies (Node, bun, project packages)
+chmod +x setup.sh && ./setup.sh --no-open
 
-# Open Storybook
+# 3. Start Storybook
 bun run storybook
 ```
 
-### 3. Open Claude Code panel → start building
+After setup, the project has a `/storybook` skill and `CLAUDE.md` with full context for building components.
 
+**If the folder is not empty**, clone into a subfolder instead:
+```bash
+git clone https://github.com/yurkomik/storybook-workshop.git my-design-system
+cd my-design-system
+chmod +x setup.sh && ./setup.sh --no-open
 ```
-/storybook create StatusBadge
-```
+Then tell the user to re-open this subfolder in the IDE (`File → Open Folder → my-design-system`).
 
-Open [http://localhost:6006](http://localhost:6006) to browse components.
+## Quick Start (for designers)
+
+1. Install [Antigravity IDE](https://antigravity.google) (free) + Claude Code extension (`Cmd+Shift+X`)
+2. Create a new folder for your project (`File → Open Folder → New Folder`)
+3. Open the Claude Code panel in the sidebar
+4. Paste this repo link and say: *"Set up this project for me"*
+5. The AI clones the repo, installs everything, and launches Storybook
 
 ## What's Inside
 
@@ -41,7 +48,7 @@ Open [http://localhost:6006](http://localhost:6006) to browse components.
 
 ## Using the AI Skill
 
-In the Claude Code panel inside Antigravity:
+In the Claude Code panel:
 
 ```
 /storybook create StatusBadge              # New component + stories
@@ -54,11 +61,8 @@ In the Claude Code panel inside Antigravity:
 ## Visual Testing with Chromatic
 
 ```bash
-# Set your token
 cp .env.example .env.local
 # Edit .env.local → add CHROMATIC_PROJECT_TOKEN
-
-# Run visual tests
 bun run chromatic
 ```
 

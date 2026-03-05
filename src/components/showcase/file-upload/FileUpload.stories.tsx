@@ -159,8 +159,6 @@ function FileUploadWithState(props: Partial<FileUploadProps>) {
     <div className="flex flex-col items-center gap-6">
       <div className="w-[420px] rounded-lg border border-border bg-background p-4">
         <FileUpload
-          maxFiles={5}
-          showPreview
           {...props}
           onFilesSelected={(selected) => {
             log(`Selected ${selected.length} file(s): ${selected.map((f) => f.name).join(', ')}`)
@@ -287,7 +285,11 @@ export const AllVariants: Story = {
  * and see state changes in real time.
  */
 export const Interactive: Story = {
-  render: () => <FileUploadWithState />,
+  args: {
+    maxFiles: 5,
+    showPreview: true,
+  },
+  render: (args) => <FileUploadWithState {...args} />,
 }
 
 /** Disabled state prevents all interaction. */

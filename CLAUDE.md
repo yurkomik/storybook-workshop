@@ -7,8 +7,10 @@ Storybook workshop template. React 19, Vite, Tailwind CSS v4, Storybook 10, Chro
 If node_modules/ doesn't exist or the user says they just cloned/started:
 
 1. Run `chmod +x setup.sh && ./setup.sh --no-open` — installs all dependencies
-2. Run `bun run storybook` — opens Storybook at http://localhost:6006
-3. Point them to `docs/storybook-workshop-guide.md` for the full workshop curriculum
+2. Run `bun run storybook` — starts the dev server
+3. Tell the user to open **http://localhost:6006** in their browser — they'll see Button and FileUpload components with interactive stories
+4. Point them to `docs/storybook-workshop-guide.md` for the full workshop curriculum
+5. To create new components, they can type `/storybook create ComponentName` in this chat
 
 ## Publishing (when user wants to push/save/deploy)
 

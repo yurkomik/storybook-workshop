@@ -15,9 +15,16 @@ git clone https://github.com/yurkomik/storybook-workshop.git .
 # Install all dependencies (Node, bun, gh, Claude Code, project packages)
 chmod +x setup.sh && ./setup.sh --no-open
 
-# Start Storybook
+# Start the Storybook dev server
 bun run storybook
 ```
+
+After `bun run storybook` starts, tell the user:
+- Open **http://localhost:6006** in their browser to see the component library
+- The sidebar has **UI / Button** (simple component) and **Showcase / FileUpload** (complex component)
+- Try clicking stories, changing Controls, checking the Accessibility tab
+- Storybook hot-reloads — any component changes appear instantly in the browser
+- To create new components, use the Claude Code panel: `/storybook create ComponentName`
 
 If the folder is not empty, clone into a subfolder instead:
 ```bash

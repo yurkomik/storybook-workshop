@@ -27,7 +27,7 @@ const DEFAULT_MAX_SIZE = 10 * 1024 * 1024 // 10 MB
  * and wildcard MIME types (image/*).
  */
 function matchesAccept(file: File, accept: string[]): boolean {
-  if (accept.length === 0) return true
+  if (!Array.isArray(accept) || accept.length === 0) return true
 
   return accept.some((pattern) => {
     // Extension pattern like ".pdf"
@@ -124,7 +124,7 @@ export function FileUpload({
 
       for (const file of incoming) {
         // Type validation
-        if (accept && accept.length > 0 && !matchesAccept(file, accept)) {
+        if (Array.isArray(accept) && accept.length > 0 && !matchesAccept(file, accept)) {
           errors.push({
             type: 'invalid-type',
             message: `"${file.name}" is not an accepted file type. Accepted: ${accept.join(', ')}`,

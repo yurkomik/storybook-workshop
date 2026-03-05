@@ -85,7 +85,7 @@ interface DropZoneProps {
  * Maps our array format to a comma-separated string.
  */
 function buildAcceptString(accept?: string[]): string | undefined {
-  if (!accept || accept.length === 0) return undefined
+  if (!Array.isArray(accept) || accept.length === 0) return undefined
   return accept.join(',')
 }
 
@@ -228,7 +228,7 @@ export function DropZone({
             </p>
             <p className="text-xs text-muted-foreground">
               or click to browse
-              {accept && accept.length > 0 && (
+              {Array.isArray(accept) && accept.length > 0 && (
                 <span className="ml-1">({accept.join(', ')})</span>
               )}
             </p>

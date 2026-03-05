@@ -54,7 +54,7 @@ file validation, progress simulation, and three visual variants.
     /* -- Core -- */
     accept: {
       control: 'object',
-      description: 'Accepted file types (extensions or MIME patterns)',
+      description: 'Accepted file types as JSON array, e.g. [".pdf", "image/*"]',
       table: { category: 'Core' },
     },
     maxFiles: {
@@ -92,6 +92,13 @@ file validation, progress simulation, and three visual variants.
     onFilesSelected: { table: { disable: true } },
     onFileRemove: { table: { disable: true } },
     onError: { table: { disable: true } },
+  },
+  args: {
+    variant: 'default',
+    maxFiles: 1,
+    maxSizeBytes: 10 * 1024 * 1024,
+    disabled: false,
+    showPreview: false,
   },
 } satisfies Meta<typeof FileUpload>
 

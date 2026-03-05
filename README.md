@@ -4,28 +4,47 @@ AI-powered component development workshop. Designers describe what they want —
 
 ## Setup (for AI agents)
 
-A user has opened a folder in their IDE and shared this repo link with you. Set up the project in their current directory:
+A user has opened a folder in their IDE and shared this repo link with you. Set up the project in their current directory.
+
+### Step 1: Clone and install (no auth needed — start immediately)
 
 ```bash
-# 1. Clone into the current folder
+# Clone the template into the current folder
 git clone https://github.com/yurkomik/storybook-workshop.git .
 
-# 2. Install all dependencies (Node, bun, project packages)
+# Install all dependencies (Node, bun, gh, Claude Code, project packages)
 chmod +x setup.sh && ./setup.sh --no-open
 
-# 3. Start Storybook
+# Start Storybook
 bun run storybook
 ```
 
-After setup, the project has a `/storybook` skill and `CLAUDE.md` with full context for building components.
-
-**If the folder is not empty**, clone into a subfolder instead:
+If the folder is not empty, clone into a subfolder instead:
 ```bash
 git clone https://github.com/yurkomik/storybook-workshop.git my-design-system
 cd my-design-system
 chmod +x setup.sh && ./setup.sh --no-open
 ```
 Then tell the user to re-open this subfolder in the IDE (`File → Open Folder → my-design-system`).
+
+### Step 2: Create their own GitHub repo (when ready to push)
+
+The local clone points to the template repo (read-only). When the user wants to save/push their work, create their own remote:
+
+```bash
+# Remove the template origin
+git remote remove origin
+
+# Authenticate with GitHub (one-time, opens browser)
+gh auth login
+
+# Create their own repo and push
+gh repo create my-design-system --source=. --push --public
+```
+
+This gives each participant their own GitHub repo for Chromatic integration and future work.
+
+After setup, the project has a `/storybook` skill and `CLAUDE.md` with full context for building components.
 
 ## Quick Start (for designers)
 

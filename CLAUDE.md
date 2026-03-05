@@ -10,6 +10,16 @@ If node_modules/ doesn't exist or the user says they just cloned/started:
 2. Run `bun run storybook` — opens Storybook at http://localhost:6006
 3. Point them to `docs/storybook-workshop-guide.md` for the full workshop curriculum
 
+## Publishing (when user wants to push/save/deploy)
+
+The local clone initially points to the template repo (read-only). Create their own remote:
+
+```bash
+git remote remove origin
+gh auth login                                           # one-time, opens browser
+gh repo create my-design-system --source=. --push --public
+```
+
 ## Available Skill
 
 This project has a `/storybook` skill for component development:

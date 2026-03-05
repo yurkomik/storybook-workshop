@@ -4,25 +4,27 @@ AI-powered component development workshop. Designers describe what they want —
 
 ## Quick Start
 
-### Option A: CLI (recommended)
+### 1. Install [Antigravity IDE](https://antigravity.google) (free) + Claude Code extension (`Cmd+Shift+X`)
+
+### 2. Open Antigravity terminal (`` Ctrl+` ``) and run:
 
 ```bash
-# 1. Create your own repo from this template + clone it
+# Clone the template into your own GitHub repo
 gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
 cd my-design-system
 
-# 2. Run setup (installs Node, bun, Claude Code, gh if missing)
+# Install everything (Node, bun, Claude Code, project deps)
 chmod +x setup.sh && ./setup.sh
 
-# 3. Open Storybook
+# Open Storybook
 bun run storybook
 ```
 
-### Option B: GitHub Web
+### 3. Open Claude Code panel → start building
 
-1. Click **"Use this template"** → **"Create a new repository"** on GitHub
-2. Clone your new repo: `git clone <your-repo-url> my-design-system`
-3. Run: `cd my-design-system && chmod +x setup.sh && ./setup.sh`
+```
+/storybook create StatusBadge
+```
 
 Open [http://localhost:6006](http://localhost:6006) to browse components.
 
@@ -39,7 +41,7 @@ Open [http://localhost:6006](http://localhost:6006) to browse components.
 
 ## Using the AI Skill
 
-In Claude Code (terminal or IDE extension):
+In the Claude Code panel inside Antigravity:
 
 ```
 /storybook create StatusBadge              # New component + stories

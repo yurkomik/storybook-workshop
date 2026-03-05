@@ -16,38 +16,41 @@ Complete these **before** the workshop:
 - [ ] **Chromatic account** — [chromatic.com/start](https://www.chromatic.com/start) (sign in with GitHub, free tier)
 - [ ] **Anthropic account** — [console.anthropic.com](https://console.anthropic.com) (for Claude Code authentication)
 - [ ] **macOS laptop** with admin access (Windows users: install WSL first)
-- [ ] **IDE installed** — [Antigravity](https://antigravity.google) (recommended, free) or VS Code / Cursor
+- [ ] **Antigravity IDE** — [antigravity.google](https://antigravity.google) (free, or use VS Code / Cursor)
 
 ---
 
 ## Phase 1: Setup (30 min)
 
-### 1.1 Get the Template
+> Everything happens inside Antigravity — no need to open a separate Terminal app.
 
-Open Terminal (`Cmd + Space` → type "Terminal"). Your facilitator will share the commands.
+### 1.1 Install Claude Code Extension
 
-**If you already have `gh` CLI and GitHub auth:**
+1. Open **Antigravity**
+2. Press `Cmd + Shift + X` (Extensions panel)
+3. Search **"Claude Code"** → Install
+4. You should see the Claude Code icon in the left sidebar
+
+### 1.2 Open the Terminal Inside Antigravity
+
+Press `` Ctrl + ` `` (backtick) to open the built-in terminal at the bottom of the IDE.
+
+### 1.3 Clone the Template
+
+Your facilitator will share the repo URL. Paste these commands in the Antigravity terminal:
+
 ```bash
-gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
-cd my-design-system
-```
-
-**If starting from scratch:**
-```bash
-# Install GitHub CLI first (macOS)
-brew install gh || echo "Install from https://cli.github.com"
-
-# Authenticate with GitHub
+# Authenticate with GitHub (follow the prompts — choose "Login with a web browser")
 gh auth login
 
-# Create your repo from the template
+# Create your own repo from the workshop template
 gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
 cd my-design-system
 ```
 
-> **Alternative:** Go to the template repo on GitHub, click **"Use this template"** → **"Create a new repository"**, then clone it manually.
+> **Don't have `gh`?** The setup script (next step) will install it. In that case, ask your facilitator for help cloning the repo first.
 
-### 1.2 Run the Setup Script
+### 1.4 Run the Setup Script
 
 ```bash
 chmod +x setup.sh
@@ -64,23 +67,25 @@ This script automatically installs everything you need:
 
 > **Tip:** If you already have these tools, the script skips them. Safe to run multiple times.
 
-### 1.3 Authenticate Claude Code
+### 1.5 Open the Project Folder
 
+In Antigravity: **File → Open Folder** → select the `my-design-system` folder you just cloned.
+
+This is important — Claude Code reads the project's `CLAUDE.md` when the folder is open, so it knows how to help you.
+
+### 1.6 Authenticate Claude Code
+
+Click the **Claude Code icon** in the left sidebar. It will ask you to sign in with your Anthropic account.
+
+Alternatively, in the built-in terminal:
 ```bash
 claude
 ```
+Follow the prompts, then type `/exit` to return to the terminal.
 
-Follow the prompts to log in with your Anthropic account. Type `/exit` to return to the terminal.
+### 1.7 Verify Everything Works
 
-### 1.4 Install Claude Code in Your IDE
-
-1. Open Antigravity (or VS Code / Cursor)
-2. Press `Cmd + Shift + X` (Extensions panel)
-3. Search "Claude Code" → Install
-4. Open the Claude Code panel in the sidebar
-
-### 1.5 Verify Everything Works
-
+In the Antigravity terminal:
 ```bash
 bun run storybook
 ```
@@ -139,11 +144,7 @@ This is the core of the workshop. You'll describe a component in plain English, 
 
 ### 3.1 Open Claude Code
 
-In your IDE, open the Claude Code panel. Or use the terminal:
-
-```bash
-claude
-```
+Click the **Claude Code icon** in the Antigravity sidebar (left panel). This opens the AI chat right inside your IDE — you can see your code files, Storybook browser, and AI conversation all at once.
 
 ### 3.2 Describe Your Component
 
@@ -251,20 +252,18 @@ This runs the story checklist audit — it'll tell you which story types are pre
 
 ### 5.1 Push to GitHub
 
+Since you created your repo from the template in Phase 1, it's already connected to GitHub. In the Antigravity terminal (`` Ctrl + ` ``):
+
 ```bash
-# Stop Storybook (Ctrl + C)
+# Stop Storybook first (Ctrl + C in the terminal running it)
 
-# Initialize git and push
-git init
+# Commit your new component
 git add .
-git commit -m "feat: initial design system with Button, FileUpload, and StatusBadge"
-git branch -M main
-
-# Create a repo on GitHub (follow the prompts)
-gh repo create my-design-system --private --push
+git commit -m "feat: add StatusBadge component with full story suite"
+git push
 ```
 
-> **Note:** If you don't have `gh` CLI, create the repo on github.com and follow the push instructions.
+> **Tip:** You can also ask Claude Code: *"commit and push my changes"* — it will do this for you.
 
 ### 5.2 Connect Chromatic
 

@@ -597,6 +597,50 @@ export const DisabledInteractionTest: Story = {
   },
 }
 
+/** Simulate drag-and-drop of a file onto the drop zone. */
+export const DragAndDropTest: Story = {
+  args: {
+    maxFiles: 3,
+  },
+  play: async ({ canvasElement, step }) => {
+    const canvas = within(canvasElement)
+
+    await step('Drop zone is visible', async () => {
+      const dropZone = canvas.getByText(/drag.*drop/i)
+      await expect(dropZone).toBeVisible()
+    })
+
+    await step('Simulate dropping a PDF file', async () => {
+      // Find the drop zone (the role="button" container)
+      const dropTarget = canvasElement.querySelector('[role="button"]')!
+
+      // Create a mock file and DataTransfer
+      const file = new File(['mock-content'], 'design-spec.pdf', {
+        type: 'application/pdf',
+      })
+      const dataTransfer = new DataTransfer()
+      dataTransfer.items.add(file)
+
+      // Dispatch drag sequence: dragenter → dragover → drop
+      dropTarget.dispatchEvent(
+        new DragEvent('dragenter', { dataTransfer, bubbles: true })
+      )
+      dropTarget.dispatchEvent(
+        new DragEvent('dragover', { dataTransfer, bubbles: true })
+      )
+      dropTarget.dispatchEvent(
+        new DragEvent('drop', { dataTransfer, bubbles: true })
+      )
+    })
+
+    await step('Dropped file appears in the list', async () => {
+      // Wait for the file name to appear (the component processes files async)
+      const fileName = await canvas.findByText('design-spec.pdf')
+      await expect(fileName).toBeVisible()
+    })
+  },
+}
+
 /** Verify remove button works on pre-populated files. */
 export const RemoveFileTest: Story = {
   render: () => (

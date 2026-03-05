@@ -24,13 +24,28 @@ Complete these **before** the workshop:
 
 ### 1.1 Get the Template
 
-Your facilitator will share the template repo URL. Clone it:
+Open Terminal (`Cmd + Space` → type "Terminal"). Your facilitator will share the commands.
 
+**If you already have `gh` CLI and GitHub auth:**
 ```bash
-# Open Terminal (Cmd + Space → "Terminal")
-git clone <TEMPLATE_URL> my-design-system
+gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
 cd my-design-system
 ```
+
+**If starting from scratch:**
+```bash
+# Install GitHub CLI first (macOS)
+brew install gh || echo "Install from https://cli.github.com"
+
+# Authenticate with GitHub
+gh auth login
+
+# Create your repo from the template
+gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
+cd my-design-system
+```
+
+> **Alternative:** Go to the template repo on GitHub, click **"Use this template"** → **"Create a new repository"**, then clone it manually.
 
 ### 1.2 Run the Setup Script
 
@@ -40,6 +55,7 @@ chmod +x setup.sh
 ```
 
 This script automatically installs everything you need:
+- **GitHub CLI** (for pushing code later)
 - **fnm** (Node.js version manager)
 - **Node.js 22** (JavaScript runtime)
 - **bun** (fast package manager)

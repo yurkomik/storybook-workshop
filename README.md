@@ -4,17 +4,25 @@ AI-powered component development workshop. Designers describe what they want —
 
 ## Quick Start
 
+### Option A: CLI (recommended)
+
 ```bash
-# 1. Clone this template
-git clone <your-repo-url> my-design-system
+# 1. Create your own repo from this template + clone it
+gh repo create my-design-system --template yurkomik/storybook-workshop --clone --public
 cd my-design-system
 
-# 2. Run setup (installs Node, bun, Claude Code if missing)
+# 2. Run setup (installs Node, bun, Claude Code, gh if missing)
 chmod +x setup.sh && ./setup.sh
 
 # 3. Open Storybook
 bun run storybook
 ```
+
+### Option B: GitHub Web
+
+1. Click **"Use this template"** → **"Create a new repository"** on GitHub
+2. Clone your new repo: `git clone <your-repo-url> my-design-system`
+3. Run: `cd my-design-system && chmod +x setup.sh && ./setup.sh`
 
 Open [http://localhost:6006](http://localhost:6006) to browse components.
 

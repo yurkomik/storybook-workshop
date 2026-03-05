@@ -211,7 +211,44 @@ else
 fi
 
 # ============================================================================
-# 6. Antigravity IDE (check only — manual install required)
+# 6. GitHub CLI (gh)
+# ============================================================================
+reload_path
+if command -v gh &>/dev/null; then
+  ok "✓" "gh       $(gh --version | head -1 | awk '{print $3}')"
+else
+  if $CHECK_ONLY; then
+    fail "✗" "gh       not found"
+    ALL_OK=false
+  else
+    warn "⟳" "gh       installing..."
+    if [[ "$(uname)" == "Darwin" ]]; then
+      # macOS: use the official installer
+      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg 2>/dev/null || true
+      # Fallback: try brew if available, otherwise manual download
+      if command -v brew &>/dev/null; then
+        brew install gh 2>/dev/null
+      else
+        echo "    → Install GitHub CLI from: https://cli.github.com"
+        echo "    → Or install Homebrew first: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+      fi
+    else
+      # Linux
+      curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg 2>/dev/null
+      echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+      sudo apt update && sudo apt install gh -y
+    fi
+    reload_path
+    if command -v gh &>/dev/null; then
+      ok "✓" "gh       $(gh --version | head -1 | awk '{print $3}')  (installed)"
+    else
+      warn "?" "gh       manual install needed — https://cli.github.com"
+    fi
+  fi
+fi
+
+# ============================================================================
+# 7. Antigravity IDE (check only — manual install required)
 # ============================================================================
 ANTIGRAVITY_FOUND=false
 if [[ -d "/Applications/Antigravity.app" ]] || [[ -d "$HOME/Applications/Antigravity.app" ]]; then
@@ -246,7 +283,7 @@ if $CHECK_ONLY; then
 fi
 
 # ============================================================================
-# 7. Install project dependencies
+# 8. Install project dependencies
 # ============================================================================
 info "📦 Installing project dependencies..."
 reload_path
@@ -257,7 +294,7 @@ echo -e "  ${GREEN}✓${NC}  bun install complete"
 echo ""
 
 # ============================================================================
-# 8. Summary
+# 9. Summary
 # ============================================================================
 info "✅ Ready! Run: bun run storybook"
 echo ""
@@ -279,7 +316,7 @@ if $NEEDS_SHELL_RELOAD; then
 fi
 
 # ============================================================================
-# 9. Optionally open Storybook
+# 10. Optionally open Storybook
 # ============================================================================
 if ! $NO_OPEN; then
   read -p "Open Storybook now? [Y/n] " -n 1 -r

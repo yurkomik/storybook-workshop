@@ -1,0 +1,133 @@
+/* ============================================================================
+   Folder Upload Animations
+
+   CSS @keyframes for the morphing-folder upload component.
+   The FRONT panel tilts open toward the viewer (rotateX positive = top edge
+   comes toward you). The file card descends slowly from above into the gap.
+   ============================================================================ */
+
+/* Upload arrow gentle bob */
+@keyframes folder-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Glow intensity oscillation during drag hover */
+@keyframes folder-glow-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+
+/* Error glow pulse — red tint */
+@keyframes folder-error-glow-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.03); }
+}
+
+/* File card descends slowly from above into the folder gap */
+@keyframes file-card-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(-60px) rotate(-2deg) scale(0.85);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-30px) rotate(-3deg) scale(0.95);
+  }
+  70% {
+    transform: translateY(2px) rotate(-3deg) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotate(-3deg) scale(1);
+  }
+}
+
+/* Scale bounce on file drop */
+@keyframes folder-bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.06); }
+  60% { transform: scale(0.97); }
+  100% { transform: scale(1); }
+}
+
+
+/* Error shake */
+@keyframes folder-shake {
+  0%, 100% { transform: translateX(0); }
+  15% { transform: translateX(-6px); }
+  30% { transform: translateX(5px); }
+  45% { transform: translateX(-4px); }
+  60% { transform: translateX(3px); }
+  75% { transform: translateX(-2px); }
+}
+
+/* File card idle slight sway */
+@keyframes file-card-idle {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-2px) rotate(-2deg); }
+}
+
+/* ── Component classes ─────────────────────────────────────────────── */
+
+.folder-float {
+  animation: folder-float 3s ease-in-out infinite;
+}
+
+.folder-glow-pulse {
+  animation: folder-glow-pulse 2s ease-in-out infinite;
+}
+
+.folder-error-glow-pulse {
+  animation: folder-error-glow-pulse 1.5s ease-in-out infinite;
+}
+
+.folder-bounce {
+  animation: folder-bounce 0.4s ease-out;
+}
+
+.folder-shake {
+  animation: folder-shake 0.5s ease-out;
+}
+
+.folder-file-card-enter {
+  animation: file-card-enter 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.folder-file-card-idle {
+  animation: file-card-idle 4s ease-in-out infinite;
+}
+
+/* ── 3D transform transitions ──────────────────────────────────────── */
+
+/* Back panel — static body of the folder, sits behind */
+.folder-back-panel {
+  transform: translateZ(-1px);
+}
+
+/* Front panel — the lid hinged at the bottom edge.
+   Top tilts away from viewer to reveal the folder opening. */
+.folder-front-panel {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: center bottom;
+  transform: translateZ(1px);
+}
+
+.folder-front-panel[data-open="true"] {
+  transform: translateZ(1px) rotateX(-35deg);
+}
+
+/* Error state on front panel — slight tilt open */
+.folder-front-panel[data-error="true"] {
+  transform: translateZ(1px) rotateX(-8deg);
+}
+
+.folder-front-panel[data-open="true"][data-error="true"] {
+  transform: translateZ(1px) rotateX(-35deg);
+}
+
+.folder-scene {
+  perspective: 800px;
+  transform-style: preserve-3d;
+  overflow: visible;
+}

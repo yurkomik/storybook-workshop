@@ -1,0 +1,157 @@
+/* ============================================================================
+   Sci-fi Upload Animations
+
+   Cyberpunk terminal effects: scanlines, neon pulse, text flicker,
+   cursor blink, particle float, and glitch displacement.
+
+   Custom OKLCH color palette:
+   --scifi-cyan:       oklch(75% 0.15 195)
+   --scifi-magenta:    oklch(65% 0.25 330)
+   --scifi-dark-bg:    oklch(12% 0.02 260)
+   --scifi-neon-green: oklch(80% 0.2 145)
+   ============================================================================ */
+
+/* Scan line sweep */
+@keyframes scifi-scanline {
+  0% { top: -4px; }
+  100% { top: 100%; }
+}
+
+/* Neon border pulse */
+@keyframes scifi-neon-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 5px oklch(75% 0.15 195 / 0.4),
+      inset 0 0 5px oklch(75% 0.15 195 / 0.1);
+  }
+  50% {
+    box-shadow:
+      0 0 15px oklch(75% 0.15 195 / 0.6),
+      0 0 30px oklch(75% 0.15 195 / 0.2),
+      inset 0 0 10px oklch(75% 0.15 195 / 0.15);
+  }
+}
+
+/* Text flicker */
+@keyframes scifi-text-flicker {
+  0%, 100% { opacity: 1; }
+  92% { opacity: 1; }
+  93% { opacity: 0.7; }
+  94% { opacity: 1; }
+  96% { opacity: 0.8; }
+  97% { opacity: 1; }
+}
+
+/* Cursor blink */
+@keyframes scifi-cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Floating particles */
+@keyframes scifi-particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
+  100% {
+    transform: translateY(-100px) translateX(var(--particle-drift, 10px));
+    opacity: 0;
+  }
+}
+
+/* Glitch horizontal displacement */
+@keyframes scifi-glitch {
+  0%, 100% { transform: translateX(0); filter: none; }
+  20% { transform: translateX(-3px); filter: hue-rotate(90deg); }
+  40% { transform: translateX(3px); filter: hue-rotate(-90deg); }
+  60% { transform: translateX(-1px); filter: none; }
+  80% { transform: translateX(2px); filter: hue-rotate(45deg); }
+}
+
+/* Neon border color shift */
+@keyframes scifi-border-shift {
+  0%, 100% { border-color: oklch(75% 0.15 195); }
+  50% { border-color: oklch(65% 0.25 330); }
+}
+
+/* ── Component classes ─────────────────────────────────────────────── */
+
+.scifi-scanline {
+  animation: scifi-scanline 3s linear infinite;
+}
+
+.scifi-neon-pulse {
+  animation: scifi-neon-pulse 2s ease-in-out infinite;
+}
+
+.scifi-text-flicker {
+  animation: scifi-text-flicker 4s linear infinite;
+}
+
+.scifi-cursor-blink {
+  animation: scifi-cursor-blink 1s step-end infinite;
+}
+
+.scifi-glitch {
+  animation: scifi-glitch 0.3s ease-in-out 3;
+}
+
+.scifi-border-shift {
+  animation: scifi-border-shift 3s ease-in-out infinite;
+}
+
+/* Particle base */
+.scifi-particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
+  background: oklch(75% 0.15 195);
+  animation: scifi-particle-float var(--particle-duration, 4s) ease-in-out infinite;
+  animation-delay: var(--particle-delay, 0s);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Corner accent — L-shaped neon lines */
+.scifi-corner-accent {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.scifi-corner-accent::before,
+.scifi-corner-accent::after {
+  content: '';
+  position: absolute;
+  background: oklch(75% 0.15 195);
+}
+
+.scifi-corner-accent::before {
+  width: 16px;
+  height: 2px;
+}
+
+.scifi-corner-accent::after {
+  width: 2px;
+  height: 16px;
+}
+
+/* Top-left */
+.scifi-corner-tl::before { top: 0; left: 0; }
+.scifi-corner-tl::after { top: 0; left: 0; }
+
+/* Top-right */
+.scifi-corner-tr::before { top: 0; right: 0; }
+.scifi-corner-tr::after { top: 0; right: 0; }
+
+/* Bottom-left */
+.scifi-corner-bl::before { bottom: 0; left: 0; }
+.scifi-corner-bl::after { bottom: 0; left: 0; }
+
+/* Bottom-right */
+.scifi-corner-br::before { bottom: 0; right: 0; }
+.scifi-corner-br::after { bottom: 0; right: 0; }

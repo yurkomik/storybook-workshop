@@ -61,7 +61,7 @@ export function FileItem({
   return (
     <div
       className={cn(
-        'group flex items-center gap-3 rounded-md border border-border bg-card p-3',
+        'group flex min-w-0 items-center gap-3 rounded-md border border-border bg-card p-3',
         'transition-colors duration-150',
         status === 'error' && 'border-destructive/50 bg-destructive/5',
         status === 'complete' && 'border-primary/30 bg-primary/5'

@@ -32,6 +32,7 @@ const meta = {
   tags: ['autodocs'],
   parameters: {
     layout: 'centered',
+    chromatic: { delay: 300, pauseAnimationAtEnd: true },
     docs: {
       description: {
         component: `
@@ -157,7 +158,7 @@ function FileUploadWithState(props: Partial<FileUploadProps>) {
 
   return (
     <div className="flex flex-col items-center gap-6">
-      <div className="w-[420px] rounded-lg border border-border bg-background p-4">
+      <div className="w-full max-w-[420px] rounded-lg border border-border bg-background p-4">
         <FileUpload
           {...props}
           onFilesSelected={(selected) => {
@@ -182,7 +183,7 @@ function FileUploadWithState(props: Partial<FileUploadProps>) {
       </div>
 
       {/* Debug panel */}
-      <div className="w-[420px] space-y-2 rounded-md border border-dashed border-border bg-secondary/50 p-3 font-mono text-xs text-foreground/70">
+      <div className="w-full max-w-[420px] space-y-2 rounded-md border border-dashed border-border bg-secondary/50 p-3 font-mono text-xs text-foreground/70">
         <p className="mb-1 text-[10px] uppercase tracking-wider text-muted-foreground">
           State
         </p>
@@ -235,7 +236,7 @@ function PrePopulated({ variant = 'default', fileStates, disabled }: PrePopulate
   const [files, setFiles] = useState(fileStates)
 
   return (
-    <div className="w-[420px] space-y-3">
+    <div className="w-full max-w-[420px] space-y-3">
       <DropZone
         variant={variant}
         disabled={disabled}
@@ -483,7 +484,7 @@ export const DarkMode: Story = {
     ),
   ],
   render: () => (
-    <div className="w-[420px] space-y-6">
+    <div className="w-full max-w-[420px] space-y-6">
       <PrePopulated
         fileStates={[
           createFileState(MOCK_FILES.pdf, {
@@ -642,6 +643,63 @@ export const DragAndDropTest: Story = {
     })
   },
 }
+
+/* ============================================================================
+   EDGE CASE STORIES
+   ============================================================================ */
+
+/** File with a very long name — verifies truncation behavior in FileItem. */
+export const LongFilename: Story = {
+  render: () => (
+    <PrePopulated
+      fileStates={[
+        createFileState(
+          createMockFile(
+            'this-is-an-extremely-long-filename-that-should-definitely-be-truncated-by-the-component-to-avoid-layout-breakage-v2-final-FINAL.pdf',
+            3_200_000,
+            'application/pdf'
+          ),
+          { status: 'complete', progress: 100 }
+        ),
+        createFileState(
+          createMockFile(
+            'another-ridiculously-long-name-for-a-spreadsheet-export-from-the-quarterly-financial-review-meeting-2026-Q1.xlsx',
+            1_800_000,
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+          ),
+          { status: 'uploading', progress: 42 }
+        ),
+      ]}
+    />
+  ),
+}
+
+/** Max files reached — 3/3 files complete, drop zone should still render but new files will trigger error. */
+export const MaxFilesReached: Story = {
+  render: () => (
+    <PrePopulated
+      fileStates={[
+        createFileState(MOCK_FILES.pdf, { status: 'complete', progress: 100 }),
+        createFileState(MOCK_FILES.image, { status: 'complete', progress: 100 }),
+        createFileState(MOCK_FILES.csv, { status: 'complete', progress: 100 }),
+      ]}
+    />
+  ),
+}
+
+/** Interactive file rejection — accepts only PDFs under 1MB to trigger validation errors. */
+export const FileRejection: Story = {
+  args: {
+    accept: ['.pdf'],
+    maxSizeBytes: 1 * 1024 * 1024,
+    maxFiles: 2,
+  },
+  render: (args) => <FileUploadWithState {...args} />,
+}
+
+/* ============================================================================
+   INTERACTION TESTS (continued)
+   ============================================================================ */
 
 /** Verify remove button works on pre-populated files. */
 export const RemoveFileTest: Story = {

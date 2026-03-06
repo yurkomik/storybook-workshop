@@ -1,0 +1,104 @@
+/* ============================================================================
+   SVG Upload Animations
+
+   Pure CSS @keyframes for the SVG-themed upload component.
+   No animation libraries — just CSS transforms and opacity.
+   ============================================================================ */
+
+/* Cloud arrow floating animation */
+@keyframes svg-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Particle scatter on drag-over */
+@keyframes svg-particle-scatter {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--px, 20px), var(--py, -30px)) scale(0);
+    opacity: 0;
+  }
+}
+
+/* Pulse glow for drag-over state */
+@keyframes svg-pulse-glow {
+  0%, 100% { filter: drop-shadow(0 0 4px oklch(55% 0.15 250 / 0.3)); }
+  50% { filter: drop-shadow(0 0 12px oklch(55% 0.15 250 / 0.6)); }
+}
+
+/* Checkmark morph — stroke drawing */
+@keyframes svg-morph-check {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+
+/* Progress ring — animates stroke-dashoffset */
+@keyframes svg-ring-progress {
+  from { stroke-dashoffset: var(--ring-circumference, 188); }
+  to { stroke-dashoffset: var(--ring-offset, 0); }
+}
+
+/* Scale bounce on drop */
+@keyframes svg-drop-bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.08); }
+  60% { transform: scale(0.96); }
+  100% { transform: scale(1); }
+}
+
+/* Fade in for file items */
+@keyframes svg-file-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Component classes ─────────────────────────────────────────────── */
+
+.svg-upload-float {
+  animation: svg-float 3s ease-in-out infinite;
+}
+
+.svg-upload-pulse {
+  animation: svg-pulse-glow 2s ease-in-out infinite;
+}
+
+.svg-upload-bounce {
+  animation: svg-drop-bounce 0.4s ease-out;
+}
+
+.svg-upload-file-enter {
+  animation: svg-file-enter 0.3s ease-out both;
+}
+
+.svg-upload-check {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: svg-morph-check 0.4s ease-out 0.2s forwards;
+}
+
+/* Particle positions — each particle gets unique offsets via CSS vars */
+.svg-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: oklch(55% 0.15 250);
+  animation: svg-particle-scatter 0.8s ease-out forwards;
+  pointer-events: none;
+}
+
+.svg-particle:nth-child(1) { --px: -25px; --py: -35px; }
+.svg-particle:nth-child(2) { --px: 30px; --py: -25px; }
+.svg-particle:nth-child(3) { --px: -35px; --py: 10px; }
+.svg-particle:nth-child(4) { --px: 28px; --py: 15px; }
+.svg-particle:nth-child(5) { --px: -10px; --py: -40px; }
+.svg-particle:nth-child(6) { --px: 15px; --py: 30px; }

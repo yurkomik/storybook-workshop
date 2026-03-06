@@ -98,32 +98,95 @@
   animation: file-card-idle 4s ease-in-out infinite;
 }
 
+.folder-file-card-slot {
+  left: 50%;
+  top: 56px;
+  transform: translate3d(-50%, 0, -1px);
+  transform-style: preserve-3d;
+}
+
+/* ── Interactive states ─────────────────────────────────────────────── */
+
+.folder-scene {
+  transition:
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.18s ease;
+}
+
+.folder-glow-layer {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.folder-dropzone:not([aria-disabled="true"]):hover .folder-scene {
+  transform: translateY(-3px) scale(1.015);
+  filter: drop-shadow(0 14px 22px oklch(45% 0.08 280 / 0.16));
+}
+
+.folder-dropzone:not([aria-disabled="true"]):hover .folder-glow-layer {
+  opacity: 0.35;
+  transform: scale(1.03);
+}
+
+.folder-dropzone:focus-visible .folder-scene {
+  transform: translateY(-3px) scale(1.02);
+  filter:
+    drop-shadow(0 0 0.65rem oklch(72% 0.12 280 / 0.28))
+    drop-shadow(0 18px 28px oklch(45% 0.08 280 / 0.22));
+}
+
+.folder-dropzone:focus-visible .folder-glow-layer {
+  opacity: 0.48;
+  transform: scale(1.05);
+}
+
+.folder-dropzone:not([aria-disabled="true"]):active .folder-scene {
+  transform: translateY(1px) scale(0.985);
+  filter: drop-shadow(0 8px 12px oklch(45% 0.08 280 / 0.12));
+}
+
+.folder-dropzone:not([aria-disabled="true"]):active .folder-glow-layer {
+  transform: scale(0.99);
+}
+
 /* ── 3D transform transitions ──────────────────────────────────────── */
 
 /* Back panel — static body of the folder, sits behind */
 .folder-back-panel {
-  transform: translateZ(-1px);
+  transform: translateZ(-8px);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }
 
 /* Front panel — the lid hinged at the bottom edge.
    Top tilts away from viewer to reveal the folder opening. */
 .folder-front-panel {
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
   transform-origin: center bottom;
-  transform: translateZ(1px);
+  transform: translateZ(6px);
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
 .folder-front-panel[data-open="true"] {
-  transform: translateZ(1px) rotateX(-35deg);
+  transform: translateZ(6px) rotateX(-35deg);
 }
 
 /* Error state on front panel — slight tilt open */
 .folder-front-panel[data-error="true"] {
-  transform: translateZ(1px) rotateX(-8deg);
+  transform: translateZ(6px) rotateX(-8deg);
 }
 
 .folder-front-panel[data-open="true"][data-error="true"] {
-  transform: translateZ(1px) rotateX(-35deg);
+  transform: translateZ(6px) rotateX(-35deg);
+}
+
+.folder-back-panel svg,
+.folder-front-panel svg {
+  backface-visibility: hidden;
 }
 
 .folder-scene {
